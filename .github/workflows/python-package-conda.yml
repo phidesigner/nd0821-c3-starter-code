@@ -5,7 +5,6 @@ name: Python Package using Conda
 #     branches:
 #       - main
 
-
 jobs:
   build-linux:
     runs-on: ubuntu-latest

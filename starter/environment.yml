@@ -9,7 +9,7 @@ dependencies:
   - scikit-learn
   - pytest
   - requests
-  - fastapi
+  - fastapi=0.112.2
   - uvicorn
-  - gunicorn
-  - dvc
+  - gunicorn=22.0.0
+  - dvc=3.58.0

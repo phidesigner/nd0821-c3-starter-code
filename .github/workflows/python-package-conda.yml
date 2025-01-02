@@ -19,13 +19,19 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.12.8'
+    # - name: Install Miniconda
+    #   run: |
+    #     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+    #     bash miniconda.sh -b -p $HOME/miniconda
+    #     echo "$HOME/miniconda/bin" >> $GITHUB_PATH
+    #     source $HOME/miniconda/etc/profile.d/conda.sh
     - name: Add conda to system path
       run: |
         # $CONDA is an environment variable pointing to the root of the miniconda directory
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
       run: |
-        conda env update --file environment.yml --name base
+        conda env update --file environment.yml --name API
     - name: Lint with flake8
       run: |
         conda install flake8

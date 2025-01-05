@@ -15,6 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -23,6 +30,12 @@ jobs:
 
       - name: Install dependencies
         run: conda env update --file environment.yml --name API
+
+      - name: Set up DVC
+        uses: iterative/setup-dvc@v1
+
+      - name: Pull DVC Data
+        run: conda run -n API dvc pull
 
       - name: Lint with flake8
         run: |

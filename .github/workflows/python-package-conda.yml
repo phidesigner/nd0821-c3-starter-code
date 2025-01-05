@@ -30,13 +30,14 @@ jobs:
       run: |
         conda env update --file environment.yml --name API
         source activate API
-
     - name: Lint with flake8
       run: |
         source activate API
-        flake8 starter/hello.py starter/tests/test_hello.py --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 starter/hello.py starter/tests/test_hello.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 starter/hello.py starter/tests/test_hello.py \
+          --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 starter/hello.py starter/tests/test_hello.py \
+          --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
         source activate API
-        pytest starter/tests/test_hello.py
+        pytest

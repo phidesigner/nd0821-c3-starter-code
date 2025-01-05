@@ -13,21 +13,30 @@ jobs:
       max-parallel: 5
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          python-version: 3.12.8
-          environment-file: environment.yml
-          activate-environment: API
-          auto-activate-base: false
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.12.8
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12.8'
+    - name: Install Miniconda
+      run: |
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+        bash miniconda.sh -b -p $HOME/miniconda
+        echo "$HOME/miniconda/bin" >> $GITHUB_PATH
+        source $HOME/miniconda/etc/profile.d/conda.sh
+        conda init bash
+        source ~/.bashrc
+    - name: Install dependencies
+      run: |
+        conda env update --file environment.yml --name API
+        source activate API
 
-      - name: Lint with flake8
-        run: |
-          source activate API
-          flake8 starter/hello.py starter/tests/test_hello.py --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 starter/hello.py starter/tests/test_hello.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
-        run: |
-          source activate API
-          pytest starter/tests/test_hello.py
+    - name: Lint with flake8
+      run: |
+        source activate API
+        flake8 starter/hello.py starter/tests/test_hello.py --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 starter/hello.py starter/tests/test_hello.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        source activate API
+        pytest starter/tests/test_hello.py

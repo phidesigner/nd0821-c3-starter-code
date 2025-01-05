@@ -38,4 +38,5 @@ jobs:
         flake8 starter/hello.py starter/tests/test_hello.py --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
+        source activate API
         pytest starter/tests/test_hello.py

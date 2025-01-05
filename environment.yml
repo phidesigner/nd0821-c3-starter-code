@@ -14,3 +14,6 @@ dependencies:
   - gunicorn=22.0.0
   - dvc=3.58.0
   - flake8=7.1.1
+  - pip
+  - pip:
+      - dvc[s3]==3.2.0

@@ -2,7 +2,6 @@ name: Python Package using Conda
 
 on:
   workflow_dispatch:
-
 #   push:
 #     branches:
 #       - main
@@ -32,6 +31,7 @@ jobs:
     - name: Install dependencies
       run: |
         conda env update --file environment.yml --name API
+        conda activate API
     - name: Lint with flake8
       run: |
         conda install flake8

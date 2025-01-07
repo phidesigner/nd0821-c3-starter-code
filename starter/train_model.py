@@ -10,16 +10,17 @@ import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 import joblib
-from starter.ml.data import process_data
-from starter.ml.model import train_model, inference, compute_model_metrics, \
+from ml.data import process_data
+from ml.model import train_model, inference, compute_model_metrics, \
     compute_metrics_on_slices
 
 # Paths for model and data storage
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "starter" / "model"
 DATA_DIR = BASE_DIR / "data"
 DATA_FILE = DATA_DIR / "census_cleaned.csv"
-LOG_FILE = BASE_DIR / "starter" / "logs" / "train_model.log"
+LOG_FILE = MODEL_DIR / "logs" / "train_model.log"
+SLICE_OUTPUT_FILE = MODEL_DIR / "logs" / "slice_output.txt"
 
 # Ensure necessary directories exist
 MODEL_DIR.mkdir(exist_ok=True)
@@ -94,15 +95,14 @@ def train_and_evaluate(datafile=DATA_FILE) -> None:
 
     # Compute slice metrics
     logger.info("Computing metrics on slices of the data...")
-    slice_output_file = MODEL_DIR / "slice_output.txt"
-    with open(slice_output_file, "w") as slice_file:
+    with open(SLICE_OUTPUT_FILE, "w") as slice_file:
         for feature in cat_features:
             logger.info(f"Evaluating performance for feature: {feature}")
             performance = compute_metrics_on_slices(
                 test, feature, y_test, preds)
             slice_file.write(f"Performance on {
                              feature} slice:\n{performance}\n\n")
-    logger.info(f"Slice metrics saved to {slice_output_file}")
+    logger.info(f"Slice metrics saved to {SLICE_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

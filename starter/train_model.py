@@ -71,8 +71,8 @@ def train_and_evaluate(datafile=DATA_FILE) -> None:
     # Process test data
     logger.info("Processing test data...")
     X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False,
-        encoder=encoder, lb=lb
+        test, categorical_features=cat_features, label="salary",
+        training=False, encoder=encoder, lb=lb
     )
 
     # Train the model

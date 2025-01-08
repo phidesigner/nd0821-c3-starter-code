@@ -1,43 +1,181 @@
-Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
+# Census Income Inference API
 
-# Environment Set up
-* Download and install conda if you don’t have it already.
-    * Use the supplied requirements file to create a new environment, or
-    * conda create -n [envname] "python=3.8" scikit-learn pandas numpy pytest jupyter jupyterlab fastapi uvicorn -c conda-forge
-    * Install git either through conda (“conda install git”) or through your CLI, e.g. sudo apt-get git.
+## Objective
+The Census Income Inference API is designed to predict whether a person earns `<=50K` or `>50K` based on the Census Income dataset. The API preprocesses input data, runs inference using a pre-trained Random Forest model, and returns the predicted income class.
 
-## Repositories
-* Create a directory for the project and initialize git.
-    * As you work on the code, continually commit changes. Trained models you want to use in production must be committed to GitHub.
-* Connect your local git repo to GitHub.
-* Setup GitHub Actions on your repo. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
-    * Make sure you set up the GitHub Action to have the same version of Python as you used in development.
+This project also includes scripts for training the model, preprocessing the data, and testing the API.
 
-# Data
-* Download census.csv and commit it to dvc.
-* This data is messy, try to open it in pandas and see what you get.
-* To clean it, use your favorite text editor to remove all spaces.
+---
 
-# Model
-* Using the starter code, write a machine learning model that trains on the clean data and saves the model. Complete any function that has been started.
-* Write unit tests for at least 3 functions in the model code.
-* Write a function that outputs the performance of the model on slices of the data.
-    * Suggestion: for simplicity, the function can just output the performance on slices of just the categorical features.
-* Write a model card using the provided template.
+## Directory Structure
+```
+├── data
+│   ├── census.csv
+│   ├── census.csv.dvc
+│   ├── census_cleaned.csv
+│   ├── census_cleaned.csv.dvc
+│   └── data_eda.ipynb
+├── environment.yml
+├── scripts
+│   ├── API_request.py
+│   └── __init__.py
+├── starter
+│   ├── README.md
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   └── hello.cpython-312.pyc
+│   ├── hello.py
+│   ├── main.py
+│   ├── ml
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   ├── data.cpython-312.pyc
+│   │   │   └── model.cpython-312.pyc
+│   │   ├── data.py
+│   │   └── model.py
+│   ├── model
+│   │   ├── encoder.pkl
+│   │   ├── encoder.pkl.dvc
+│   │   ├── lb.pkl
+│   │   ├── lb.pkl.dvc
+│   │   ├── logs
+│   │   │   ├── slice_output.txt
+│   │   │   └── train_model.log
+│   │   ├── model.pkl
+│   │   ├── model.pkl.dvc
+│   │   └── model_card.md
+│   ├── sanitycheck.py
+│   ├── screenshots
+│   └── train_model.py
+└── tests
+    ├── __init__.py
+    ├── __pycache__
+    │   ├── __init__.cpython-312.pyc
+    │   ├── test_hello.cpython-312-pytest-7.4.4.pyc
+    │   └── test_model.cpython-312-pytest-7.4.4.pyc
+    ├── ml
+    ├── test_hello.py
+    └── test_model.py
+```
 
-# API Creation
-*  Create a RESTful API using FastAPI this must implement:
-    * GET on the root giving a welcome message.
-    * POST that does model inference.
-    * Type hinting must be used.
-    * Use a Pydantic model to ingest the body from POST. This model should contain an example.
-   	 * Hint: the data has names with hyphens and Python does not allow those as variable names. Do not modify the column names in the csv and instead use the functionality of FastAPI/Pydantic/etc to deal with this.
-* Write 3 unit tests to test the API (one for the GET and two for POST, one that tests each prediction).
+---
 
-# API Deployment
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-    * Enable automatic deployments that only deploy if your continuous integration passes.
-    * Hint: think about how paths will differ in your local environment vs. on Heroku.
-    * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-* Write a script that uses the requests module to do one POST on your live API.
+## Features
+- **Train a Model:**
+  - `train_model.py` preprocesses the Census Income dataset, trains a Random Forest classifier, evaluates it, and saves artifacts (model, encoder, and label binarizer).
+
+- **Perform Inference:**
+  - Use the `/inference` endpoint to predict income classes based on user input.
+
+- **Health Checks:**
+  - The `/health` endpoint ensures that the API and its dependencies are loaded correctly.
+
+- **Tests:**
+  - Integration tests validate the API endpoints.
+  - Unit tests validate core machine learning functions and metrics.
+
+---
+
+## Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone <repository_url>
+   cd project
+   ```
+
+2. **Set Up Virtual Environment:**
+   ```bash
+   conda env create -f environment.yml
+   conda activate <env_name>
+   ```
+
+3. **Verify Installation:**
+   ```bash
+   python starter/main.py
+   ```
+   Access the API at `http://127.0.0.1:8000`.
+
+---
+
+## API Endpoints
+
+### Root Endpoint
+**`GET /`**
+- **Description:** Returns a welcome message.
+- **Response:**
+  ```json
+  {"message": "Welcome to the Census Income Inference API!"}
+  ```
+
+### Health Check
+**`GET /health`**
+- **Description:** Verifies the readiness of the API and its dependencies.
+- **Response:**
+  ```json
+  {"status": "healthy"}
+  ```
+
+### Inference
+**`POST /inference`**
+- **Description:** Predicts income class based on Census data.
+- **Request Body Example:**
+  ```json
+  {
+      "age": 34,
+      "workclass": "Private",
+      "education": "Bachelors",
+      "marital-status": "Married-civ-spouse",
+      "occupation": "Prof-specialty",
+      "relationship": "Husband",
+      "race": "White",
+      "sex": "Male",
+      "native-country": "United-States",
+      "capital-gain": 0,
+      "capital-loss": 0,
+      "hours-per-week": 40
+  }
+  ```
+- **Response Example:**
+  ```json
+  {"prediction": ">50K"}
+  ```
+
+---
+
+## Training the Model
+Run the following command to train and evaluate the model:
+```bash
+python starter/train_model.py
+```
+Artifacts (e.g., `model.pkl`, `encoder.pkl`) will be saved to the `starter/model/` directory.
+
+---
+
+## Testing
+
+### Integration Tests
+- Located in `tests/test_model.py`.
+- Run using:
+  ```bash
+  pytest tests/test_model.py
+  ```
+
+### Manual Testing
+- Use `scripts/API_request.py` to manually test the API.
+- Example usage:
+  ```bash
+  python scripts/API_request.py
+  ```
+
+---
+
+## Logging
+- Logs are stored in `starter/model/logs/train_model.log`.
+- Logs include training metrics, slice metrics, and API request information.
+
+---
+
+## License
+This project is licensed under the MIT License.

@@ -5,7 +5,7 @@ from pathlib import Path
 import logging
 import os
 import uvicorn
-from ml.data import process_data
+from starter.ml.data import process_data
 import pandas as pd
 
 # Paths for model and data storage
@@ -71,14 +71,16 @@ class InferenceRequest(BaseModel):
 async def load_artifacts():
     """Load model and artifacts during startup."""
     global model, encoder, lb
-    try:
-        model = joblib.load(MODEL_DIR / "model.pkl")
-        encoder = joblib.load(MODEL_DIR / "encoder.pkl")
-        lb = joblib.load(MODEL_DIR / "lb.pkl")
-        logger.info("Model and artifacts loaded successfully.")
-    except Exception as e:
-        logger.error("Error loading artifacts: %s", str(e))
-        raise RuntimeError("Failed to load model artifacts")
+try:
+    model = joblib.load(MODEL_DIR / "model.pkl")
+    logger.info("Model loaded successfully.")
+    encoder = joblib.load(MODEL_DIR / "encoder.pkl")
+    logger.info("Encoder loaded successfully.")
+    lb = joblib.load(MODEL_DIR / "lb.pkl")
+    logger.info("LabelBinarizer loaded successfully.")
+except Exception as e:
+    logger.error("Error loading artifacts: %s", e)
+    raise RuntimeError("Failed to load model artifacts")
 
 
 @app.get("/")

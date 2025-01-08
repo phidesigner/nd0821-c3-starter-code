@@ -5,6 +5,8 @@ from pathlib import Path
 import logging
 import os
 import uvicorn
+from ml.data import process_data
+import pandas as pd
 
 # Paths for model and data storage
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,9 +103,6 @@ def health_check() -> dict:
 def predict_income(request: InferenceRequest) -> dict:
     """Perform inference on the input data."""
     try:
-        # Log the incoming request
-        logger.info("Incoming request: %s", request.dict())
-
         # Convert request to DataFrame-compatible format
         input_data = {
             "age": [request.age],
@@ -115,11 +114,17 @@ def predict_income(request: InferenceRequest) -> dict:
             "race": [request.race],
             "sex": [request.sex],
             "native-country": [request.native_country],
+            "education-num": [13],
+            "fnlgt": [77516],
             "capital-gain": [request.capital_gain],
             "capital-loss": [request.capital_loss],
             "hours-per-week": [request.hours_per_week],
         }
         logger.info("Formatted input data: %s", input_data)
+
+        # Convert to pandas DataFrame
+        input_df = pd.DataFrame(input_data)
+        logger.info("Input data converted to DataFrame: %s", input_df)
 
         # Preprocess the input
         categorical_features = [
@@ -130,10 +135,11 @@ def predict_income(request: InferenceRequest) -> dict:
             "relationship",
             "race",
             "sex",
-            "native-country",
+            "native-country"
         ]
+
         X, _, _, _ = process_data(
-            input_data,
+            input_df,
             categorical_features=categorical_features,
             label=None,
             training=False,
@@ -144,8 +150,6 @@ def predict_income(request: InferenceRequest) -> dict:
 
         # Perform inference
         prediction = model.predict(X)
-        logger.info("Raw prediction result: %s", prediction)
-
         predicted_class = lb.inverse_transform(prediction)[0]
         logger.info("Predicted class: %s", predicted_class)
 

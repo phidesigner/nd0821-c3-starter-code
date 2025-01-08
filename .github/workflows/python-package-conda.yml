@@ -35,7 +35,7 @@ jobs:
         uses: iterative/setup-dvc@v1
 
       - name: Pull DVC Data
-        run: conda run -n API dvc pull census_data.csv.dvc
+        run: conda run -n API dvc pull census_cleaned.csv.dvc
 
       - name: Lint with flake8
         run: |

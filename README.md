@@ -24,7 +24,8 @@ This project also includes scripts for training the model, preprocessing the dat
 │   ├── __init__.py
 │   ├── __pycache__
 │   │   ├── __init__.cpython-312.pyc
-│   │   └── hello.cpython-312.pyc
+│   │   ├── hello.cpython-312.pyc
+│   │   └── main.cpython-312.pyc
 │   ├── hello.py
 │   ├── main.py
 │   ├── ml
@@ -54,9 +55,10 @@ This project also includes scripts for training the model, preprocessing the dat
     ├── __pycache__
     │   ├── __init__.cpython-312.pyc
     │   ├── test_hello.cpython-312-pytest-7.4.4.pyc
+    │   ├── test_main.cpython-312-pytest-7.4.4.pyc
     │   └── test_model.cpython-312-pytest-7.4.4.pyc
-    ├── ml
     ├── test_hello.py
+    ├── test_main.py
     └── test_model.py
 ```
 

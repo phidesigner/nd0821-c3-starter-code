@@ -1,0 +1,27 @@
+2025-01-08 22:33:41,771 - INFO - Model loaded successfully.
+2025-01-08 22:33:41,772 - INFO - Encoder loaded successfully.
+2025-01-08 22:33:41,773 - INFO - LabelBinarizer loaded successfully.
+2025-01-08 22:33:54,479 - INFO - Formatted input data: {'age': [34], 'workclass': ['Private'], 'education': ['Bachelors'], 'marital-status': ['Married-civ-spouse'], 'occupation': ['Prof-specialty'], 'relationship': ['Husband'], 'race': ['White'], 'sex': ['Male'], 'native-country': ['United-States'], 'education-num': [13], 'fnlgt': [77516], 'capital-gain': [0], 'capital-loss': [0], 'hours-per-week': [40]}
+2025-01-08 22:33:54,480 - INFO - Input data converted to DataFrame:    age workclass  education      marital-status      occupation  ... education-num  fnlgt capital-gain capital-loss  hours-per-week
+0   34   Private  Bachelors  Married-civ-spouse  Prof-specialty  ...            13  77516            0            0              40
+
+[1 rows x 14 columns]
+2025-01-08 22:33:54,490 - INFO - Processed input: [[3.4000e+01 1.3000e+01 7.7516e+04 0.0000e+00 0.0000e+00 4.0000e+01
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  1.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 1.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  1.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 1.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 1.0000e+00 0.0000e+00 1.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00
+  0.0000e+00 0.0000e+00 0.0000e+00 1.0000e+00 0.0000e+00 0.0000e+00]]
+2025-01-08 22:33:54,514 - INFO - Predicted class: <=50K

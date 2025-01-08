@@ -12,6 +12,10 @@ import uvicorn
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_DIR = BASE_DIR / "starter" / "model"
 
+# Ensure the logs directory exists
+LOG_DIR = MODEL_DIR / "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
 # Initialize the FastAPI app
 app = FastAPI(
     title="Census Income Inference API",
@@ -20,8 +24,11 @@ app = FastAPI(
 )
 
 # Logging setup
-logging.basicConfig(level=logging.INFO, filename="api_logs.log",
-                    format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    filename=LOG_DIR / "api_logs.log",
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Globals for model and artifacts

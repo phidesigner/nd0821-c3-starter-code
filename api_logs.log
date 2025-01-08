@@ -1,0 +1,14 @@
+2025-01-08 13:50:10,323 - INFO - NumExpr defaulting to 2 threads.
+2025-01-08 13:50:11,777 - INFO - Model and artifacts loaded successfully.
+2025-01-08 13:59:09,901 - INFO - NumExpr defaulting to 2 threads.
+2025-01-08 13:59:10,348 - INFO - Model and artifacts loaded successfully.
+2025-01-08 13:59:53,144 - INFO - NumExpr defaulting to 2 threads.
+2025-01-08 13:59:53,579 - INFO - Model and artifacts loaded successfully.
+2025-01-08 14:16:28,380 - INFO - NumExpr defaulting to 2 threads.
+2025-01-08 14:16:28,867 - INFO - Model and artifacts loaded successfully.
+2025-01-08 14:18:50,975 - ERROR - Error during prediction: name 'process_data' is not defined
+2025-01-08 14:21:17,682 - ERROR - Error during prediction: name 'process_data' is not defined
+2025-01-08 14:23:18,009 - ERROR - Error during prediction: name 'process_data' is not defined
+2025-01-08 14:26:18,887 - INFO - NumExpr defaulting to 2 threads.
+2025-01-08 14:26:19,375 - INFO - Model and artifacts loaded successfully.
+2025-01-08 14:26:41,717 - ERROR - Error during prediction: name 'process_data' is not defined

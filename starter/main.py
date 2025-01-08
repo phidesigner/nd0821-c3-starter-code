@@ -101,6 +101,9 @@ def health_check() -> dict:
 def predict_income(request: InferenceRequest) -> dict:
     """Perform inference on the input data."""
     try:
+        # Log the incoming request
+        logger.info("Incoming request: %s", request.dict())
+
         # Convert request to DataFrame-compatible format
         input_data = {
             "age": [request.age],
@@ -116,6 +119,7 @@ def predict_income(request: InferenceRequest) -> dict:
             "capital-loss": [request.capital_loss],
             "hours-per-week": [request.hours_per_week],
         }
+        logger.info("Formatted input data: %s", input_data)
 
         # Preprocess the input
         categorical_features = [
@@ -136,18 +140,20 @@ def predict_income(request: InferenceRequest) -> dict:
             encoder=encoder,
             lb=lb,
         )
+        logger.info("Processed input: %s", X)
 
         # Perform inference
         prediction = model.predict(X)
+        logger.info("Raw prediction result: %s", prediction)
+
         predicted_class = lb.inverse_transform(prediction)[0]
-        logger.info("Prediction made successfully: %s", predicted_class)
+        logger.info("Predicted class: %s", predicted_class)
 
         return {"prediction": predicted_class}
     except Exception as e:
-        logger.error("Error during prediction: %s", str(e))
+        logger.error("Error during prediction: %s", str(e), exc_info=True)
         raise HTTPException(status_code=500, detail="Prediction failed")
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host=os.getenv("HOST", "127.0.0.1"),
-                port=int(os.getenv("PORT", 8000)))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))

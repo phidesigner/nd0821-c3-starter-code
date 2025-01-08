@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 import joblib
 from pathlib import Path
 import logging
 import os
-import uvicorn
-from starter.ml.data import process_data
 import pandas as pd
+from starter.ml.data import process_data
+import uvicorn
 
 # Paths for model and data storage
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,8 +46,8 @@ class InferenceRequest(BaseModel):
     education_num: int = Field(..., alias="education-num")
     fnlgt: int = Field(..., alias="fnlgt")
 
-    class Config:
-        schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "age": 34,
                 "workclass": "Private",
@@ -65,11 +65,11 @@ class InferenceRequest(BaseModel):
                 "fnlgt": 77516
             }
         }
+    )
 
 
-@app.on_event("startup")
 async def load_artifacts():
-    """Load model and artifacts during startup."""
+    """Load model and artifacts."""
     global model, encoder, lb
 try:
     model = joblib.load(MODEL_DIR / "model.pkl")
@@ -81,6 +81,12 @@ try:
 except Exception as e:
     logger.error("Error loading artifacts: %s", e)
     raise RuntimeError("Failed to load model artifacts")
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Run startup tasks."""
+    await load_artifacts()
 
 
 @app.get("/")

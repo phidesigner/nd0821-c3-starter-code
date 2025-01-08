@@ -30,7 +30,7 @@ def compute_model_metrics(y: np.ndarray, preds: np.ndarray) -> tuple[float,
                                                                      float,
                                                                      float]:
     """
-    Validates the trained machine learning model using precision, recall, 
+    Validates the trained machine learning model using precision, recall,
     and F1.
 
     Inputs

@@ -1,5 +1,6 @@
 
 # Census Income Inference API
+[![Python Package using Conda](https://github.com/phidesigner/nd0821-c3-starter-code/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/phidesigner/nd0821-c3-starter-code/actions/workflows/python-package-conda.yml)
 
 ## Objective
 The Census Income Inference API predicts whether a person earns <=50K or >50K based on the Census Income dataset. It preprocesses input data, runs inference using a pre-trained Random Forest model, and returns the predicted income class.

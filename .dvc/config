@@ -1,4 +1,6 @@
 [core]
     remote = myremote
+[cache]
+    dir = /tmp/dvc-cache
 ['remote "myremote"']
     url = s3://udacitys3

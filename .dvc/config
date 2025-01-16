@@ -1,5 +1,6 @@
 [core]
     remote = myremote
+    autostage = true
 [cache]
     dir = /tmp/dvc-cache
 ['remote "myremote"']

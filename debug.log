@@ -1,0 +1,10 @@
+2025-01-16 12:16:49,952 - INFO - Sending request to https://nd0821-c3-starter-code-production.up.railway.app/inference
+2025-01-16 12:16:49,954 - DEBUG - Starting new HTTPS connection (1): nd0821-c3-starter-code-production.up.railway.app:443
+2025-01-16 12:16:50,415 - DEBUG - https://nd0821-c3-starter-code-production.up.railway.app:443 "POST /inference HTTP/11" 200 22
+2025-01-16 12:16:50,416 - INFO - Status code: 200
+2025-01-16 12:16:50,416 - INFO - Response: {'prediction': '<=50K'}
+2025-01-16 12:17:00,203 - INFO - Sending request to https://nd0821-c3-starter-code-production.up.railway.app/inference
+2025-01-16 12:17:00,205 - DEBUG - Starting new HTTPS connection (1): nd0821-c3-starter-code-production.up.railway.app:443
+2025-01-16 12:17:00,630 - DEBUG - https://nd0821-c3-starter-code-production.up.railway.app:443 "POST /inference HTTP/11" 200 22
+2025-01-16 12:17:00,631 - INFO - Status code: 200
+2025-01-16 12:17:00,631 - INFO - Response: {'prediction': '<=50K'}

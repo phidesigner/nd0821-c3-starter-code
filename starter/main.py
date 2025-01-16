@@ -5,7 +5,7 @@ from pathlib import Path
 import logging
 import os
 import pandas as pd
-from starter.ml.data import process_data
+from ml.data import process_data
 import uvicorn
 
 # Paths for model and data storage

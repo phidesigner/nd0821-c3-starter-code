@@ -1,4 +1,3 @@
-
 # Census Income Inference API
 [![Python Package using Conda](https://github.com/phidesigner/nd0821-c3-starter-code/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/phidesigner/nd0821-c3-starter-code/actions/workflows/python-package-conda.yml)
 
@@ -17,7 +16,17 @@ The project includes scripts for data preprocessing, model training, API integra
 │   ├── census_cleaned.csv        # Cleaned dataset
 │   ├── census_cleaned.csv.dvc    # DVC tracking for cleaned dataset
 │   └── data_eda.ipynb            # Exploratory data analysis notebook
+├── debug.log                     # Debug log file
 ├── environment.yml               # Conda environment file
+├── requirements.txt              # Python requirements file
+├── screenshots                   # Folder for screenshots
+│   ├── CD_on_Railways.png
+│   ├── CI_CD_WaitforCI_github.png
+│   ├── CI_Github_Actions.png
+│   ├── FastAPI_GET.png
+│   ├── FastAPI_Health.png
+│   ├── FastAPI_POST.png
+│   └── Programmatic_test.png
 ├── starter
 │   ├── README.md                 # API documentation
 │   ├── __init__.py               # Init file for starter module
@@ -32,18 +41,40 @@ The project includes scripts for data preprocessing, model training, API integra
 │   │   ├── lb.pkl                # Label binarizer for target variable
 │   │   ├── lb.pkl.dvc            # DVC tracking for label binarizer
 │   │   ├── logs
+│   │   │   ├── api_logs.log      # Logs for API usage
 │   │   │   ├── slice_output.txt  # Model performance on data slices
 │   │   │   └── train_model.log   # Logs from training process
-│   │   ├── model.pkl             # Trained model
-│   │   ├── model.pkl.dvc         # DVC tracking for model
-│   │   └── model_card.md         # Documentation for the trained model
+│   │   ├── model.pkl             # Trained model for income prediction
+│   │   ├── model.pkl.dvc         # DVC tracking for the trained model
+│   │   └── model_card.md         # Documentation detailing the model's design and evaluation
 │   ├── sanitycheck.py            # Sanity checks for the project
-│   ├── screenshots               # Folder for API screenshots
 │   └── train_model.py            # Model training script
 └── tests
     ├── __init__.py               # Init file for tests module
     ├── test_main.py              # Unit tests for main.py
     └── test_model.py             # Unit tests for ml/model.py
+```
+
+---
+
+## Deployment Details
+The model is deployed using Railways.com. Below are the API details:
+- **API Base URL:** `https://nd0821-c3-starter-code-production.up.railway.app`
+- **Inference Endpoint:** `${base_url}/inference`
+
+The deployment workflow includes a CI/CD pipeline with a feature to wait for all GitHub Actions CI tests to pass before deployment. Additionally, it includes automated notifications for failed tests and an optional rollback mechanism for robust deployments.
+
+---
+
+## DVC Tracking
+The following files are tracked and managed using DVC with a remote S3 backend:
+```mermaid
+flowchart TD
+    node1["data/census_cleaned.csv.dvc"]
+    node2["data/census.csv.dvc"]
+    node3["starter/model/model.pkl.dvc"]
+    node4["starter/model/encoder.pkl.dvc"]
+    node5["starter/model/lb.pkl.dvc"]
 ```
 
 ---
@@ -73,7 +104,7 @@ The project includes scripts for data preprocessing, model training, API integra
    ```bash
    python -m starter.main
    ```
-   Access the API at [http://0.0.0.0:8000 ](http://0.0.0.0:8000 ).
+   Access the API at [http://0.0.0.0:8000](http://0.0.0.0:8000).
 
 ---
 
@@ -129,7 +160,10 @@ To train the model:
 ```bash
 python starter/train_model.py
 ```
-Artifacts (model.pkl, encoder.pkl, etc.) will be saved to `starter/model/`.
+Artifacts will be saved to `starter/model/`:
+- `model.pkl`: The trained Random Forest model used for inference
+- `encoder.pkl`: Pre-trained OneHotEncoder for categorical feature encoding
+- `lb.pkl`: LabelBinarizer for processing target labels
 
 ---
 
@@ -147,9 +181,9 @@ pytest tests/
 - Key logs:
   - `train_model.log` – Training process logs
   - `slice_output.txt` – Slice metrics logs
-  - `api_logs.log` – API logs 
+  - `api_logs.log` – API logs
 
 ---
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
